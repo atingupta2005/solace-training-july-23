@@ -38,6 +38,12 @@ namespace Tutorial
         string UserName { get; set; }
         string Password { get; set; }
 
+        string Topic_name { get; set; }
+
+        string Message { get; set; }
+
+        Int32 Message_count { get; set; }
+
         const int DefaultReconnectRetries = 3;
 
         void Run(IContext context, string host)
@@ -79,7 +85,13 @@ namespace Tutorial
                 if (returnCode == ReturnCode.SOLCLIENT_OK)
                 {
                     Console.WriteLine("Session successfully connected.");
-                    PublishMessage(session);
+
+                    for (int i = 0; i < Message_count; i++)
+                    {
+                        
+                        PublishMessage(session, DateTime.Now + ":" + Message+"-"+i);
+                    }
+                    
                 }
                 else
                 {
@@ -88,18 +100,22 @@ namespace Tutorial
             }
         }
 
-        private void PublishMessage(ISession session)
+        private void PublishMessage(ISession session, string my_msg)
         {
             // Create the message
             using (IMessage message = ContextFactory.Instance.CreateMessage())
             {
-                message.Destination = ContextFactory.Instance.CreateTopic("tutorial/topic");
+                message.Destination = ContextFactory.Instance.CreateTopic(Topic_name);
                 // Create the message content as a binary attachment
-                message.BinaryAttachment = Encoding.ASCII.GetBytes("Sample Message-from Atin");
+                message.BinaryAttachment = Encoding.ASCII.GetBytes(my_msg);
 
+                Console.WriteLine("Publishing message {0}", my_msg);
+                
                 // Publish the message to the topic on the Solace messaging router
-                Console.WriteLine("Publishing message...");
-                ReturnCode returnCode = session.Send(message);
+                ReturnCode returnCode;
+
+                returnCode = session.Send(message);
+                
                 if (returnCode == ReturnCode.SOLCLIENT_OK)
                 {
                     Console.WriteLine("Done.");
@@ -108,6 +124,7 @@ namespace Tutorial
                 {
                     Console.WriteLine("Publishing failed, return code: {0}", returnCode);
                 }
+
             }
         }
 
@@ -131,6 +148,9 @@ namespace Tutorial
             string username = split[0];
             string vpnname = split[1];
             string password = args[2];
+            string topic_name = args[3];
+            string message = args[4];
+            int msg_count = Int32.Parse(args[5]);
 
             // Initialize Solace Systems Messaging API with logging to console at Warning level
             ContextFactoryProperties cfp = new ContextFactoryProperties()
@@ -150,7 +170,10 @@ namespace Tutorial
                     {
                         VPNName = vpnname,
                         UserName = username,
-                        Password = password
+                        Password = password,
+                        Topic_name = topic_name,
+                        Message = message,
+                        Message_count = msg_count
                     };
 
                     // Run the application within the context and against the host

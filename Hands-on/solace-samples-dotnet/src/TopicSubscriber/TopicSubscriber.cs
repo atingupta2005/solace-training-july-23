@@ -39,6 +39,13 @@ namespace Tutorial
         string UserName { get; set; }
         string Password { get; set; }
 
+        string Topic_name { get; set; }
+
+        string Message { get; set; }
+
+        int Message_count { get; set; }
+
+
         const int DefaultReconnectRetries = 3;
 
         private ISession Session = null;
@@ -111,7 +118,8 @@ namespace Tutorial
                 // Expecting the message content as a binary attachment
                 Console.WriteLine("Message content: {0}", Encoding.ASCII.GetString(message.BinaryAttachment));
                 // finish the program
-                WaitEventWaitHandle.Set();
+                //WaitEventWaitHandle.Set();
+                //WaitEventWaitHandle.WaitOne();
             }
         }
 
@@ -159,6 +167,10 @@ namespace Tutorial
             string username = split[0];
             string vpnname = split[1];
             string password = args[2];
+            string topic_name = args[3];
+            string message = args[4];
+            int msg_count = Int16.Parse(args[5]);
+
 
             // Initialize Solace Systems Messaging API with logging to console at Warning level
             ContextFactoryProperties cfp = new ContextFactoryProperties()
@@ -178,7 +190,10 @@ namespace Tutorial
                     {
                         VPNName = vpnname,
                         UserName = username,
-                        Password = password
+                        Password = password,
+                        Topic_name = topic_name,
+                        Message = message,
+                        Message_count = msg_count
                     })
                     {
                         // Run the application within the context and against the host

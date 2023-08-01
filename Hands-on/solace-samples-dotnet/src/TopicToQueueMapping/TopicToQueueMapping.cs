@@ -74,7 +74,8 @@ namespace Tutorial
                 UserName = UserName,
                 Password = Password,
                 ReconnectRetries = DefaultReconnectRetries,
-                IgnoreDuplicateSubscriptionError = true
+                IgnoreDuplicateSubscriptionError = true,
+                SSLValidateCertificate = false
             };
 
             // Connect to the Solace messaging router
