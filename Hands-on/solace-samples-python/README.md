@@ -67,3 +67,53 @@ For example should the broker have a server certificate derived from the public_
 - Solace Developer Portal is at [solace.dev](https://solace.dev)
 - Ask the [Solace Community](https://solace.community/categories/python-api) for further discussions and questions.
 - Official python documentation on [https://docs.solace.com/Solace-PubSub-Messaging-APIs/Python-API/python-home.htm](https://docs.solace.com/Solace-PubSub-Messaging-APIs/Python-API/python-home.htm)
+
+
+# Run Solace Python API Code
+
+## Download Python Code:
+ - https://github.com/atingupta2005/solace-training-july-23/
+
+## Update code in 
+ - solace-samples-python/patterns/direct_publisher.py
+ - solace-samples-python/patterns/direct_subscriber.py
+ - solace-samples-python/patterns/guaranteed_publisher.py
+ - solace-samples-python/patterns/guaranteed_subscriber.py
+ 
+## Code Block
+```
+broker_props = {
+    "solace.messaging.transport.host": os.environ.get('SOLACE_HOST') or "tcp://localhost:55555,tcp://localhost:55554",
+    "solace.messaging.service.vpn-name": os.environ.get('SOLACE_VPN') or "default",
+    "solace.messaging.authentication.scheme.basic.username": os.environ.get('SOLACE_USERNAME') or "default",
+    "solace.messaging.authentication.scheme.basic.password": os.environ.get('SOLACE_PASSWORD') or "default",
+    "solace.messaging.tls.cert-validated": False,
+    "solace.messaging.tls.cert-validated-date": False,
+    }
+```
+
+## Open CMD and Run below commands
+```
+set SOLACE_HOST=tcps://mr-connection-payj71ldgal.messaging.solace.cloud:55443
+set SOLACE_VPN=my-service
+set SOLACE_USERNAME=solace-cloud-client
+set SOLACE_PASSWORD=u6f8f68h74fnk4u7urg277qjek
+```
+
+## Create Python VENV (One time)
+```
+cd solace-samples-python
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+## Run code
+```
+cd patterns/
+python direct_publisher.py
+python direct_subscriber.py
+python guaranteed_publisher.py
+python direct_publisher.py
+python guaranteed_subscriber.py
+```
