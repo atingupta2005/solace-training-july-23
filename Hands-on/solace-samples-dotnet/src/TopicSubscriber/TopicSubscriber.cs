@@ -93,7 +93,7 @@ namespace Tutorial
 
                 // This is the topic on Solace messaging router where a message is published
                 // Must subscribe to it to receive messages
-                Session.Subscribe(ContextFactory.Instance.CreateTopic("tutorial/topic"), true);
+                Session.Subscribe(ContextFactory.Instance.CreateTopic(Topic_name), true);
 
                 Console.WriteLine("Waiting for a message to be published...");
                 WaitEventWaitHandle.WaitOne();
