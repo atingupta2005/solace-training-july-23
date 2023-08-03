@@ -10,7 +10,7 @@ from solace.messaging.receiver.message_receiver import MessageHandler, InboundMe
 
 if platform.uname().system == 'Windows': os.environ["PYTHONUNBUFFERED"] = "1" # Disable stdout buffer 
 
-TOPIC_PREFIX = "solace/samples/python"
+TOPIC_PREFIX = "solace/samples/python/atin"
 
 # Handle received messages
 class MessageHandlerImpl(MessageHandler):

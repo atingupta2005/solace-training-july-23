@@ -11,7 +11,7 @@ from solace.messaging.publisher.direct_message_publisher import PublishFailureLi
 if platform.uname().system == 'Windows': os.environ["PYTHONUNBUFFERED"] = "1" # Disable stdout buffer 
 
 MSG_COUNT = 5
-TOPIC_PREFIX = "solace/samples/python"
+TOPIC_PREFIX = "solace/samples/python/atin"
 
 # Inner classes for error handling
 class ServiceEventHandler(ReconnectionListener, ReconnectionAttemptListener, ServiceInterruptionListener):
@@ -70,7 +70,7 @@ direct_publisher.start()
 print(f'Direct Publisher ready? {direct_publisher.is_ready()}')
 
 # Prepare outbound message payload and body
-message_body = "this is the body of the msg"
+message_body = "this is the body of the msg-atin-"
 outbound_msg_builder = messaging_service.message_builder() \
                 .with_application_message_id("sample_id") \
                 .with_property("application", "samples") \
@@ -90,10 +90,10 @@ try:
 
             print(f'Published message on {topic}')
             count += 1
-            time.sleep(0.1)
+            time.sleep(2)
         print("\n")
         count = 1
-        time.sleep(1)
+        time.sleep(10)
 
 except KeyboardInterrupt:
     print('\nTerminating Publisher')

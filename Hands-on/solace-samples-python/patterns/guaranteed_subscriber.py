@@ -82,7 +82,7 @@ messaging_service.add_service_interruption_listener(service_handler)
 
 # Queue name. 
 # NOTE: This assumes that a persistent queue already exists on the broker with the right topic subscription 
-queue_name = "sample-queue"
+queue_name = "sample-q-atin"
 durable_exclusive_queue = Queue.durable_exclusive_queue(queue_name)
 
 try:
